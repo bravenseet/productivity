@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <link rel="icon" href="../static/images/insanelogo.png" type="image/png">
+  <title>productivity</title>
+</head>
+<body>
+    <script>
+      setInterval(displayClock, 500);
+    
+      function displayClock () {
+          var time = new Date();
+          var hours = time.getHours();
+          var mins = time.getMinutes();
+          var secs = time.getSeconds();
+          var en = 'AM';
+          var month = time.getMonth();
+          var date = time.getDate();
+          var year = time.getFullYear();
+
+          var timerHours = 0
+          var timerMins = 0
+          var timerSecs = 0
+      
+          months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+      
+          if (hours >= 12) {
+              hours = hours - 12;
+              en ='PM';
+          }
+      
+          if (hours == 0) {
+              hours = 12;
+          }
+      
+          if (mins < 10) {
+              mins = '0' + mins;
+          }
+      
+          if (secs < 10) {
+              secs = '0' + secs;
+          }
+
+      
+          document.getElementById('date').innerHTML = date + ' ' + months[month] + ' ' + year;
+          document.getElementById('clock').innerHTML = hours + ':' + mins + ':' + secs + ' ' + en;
+      }
+      
+      var myNodelist = document.getElementsByTagName("LI");
+      var i;
+      for (i = 0; i < myNodelist.length; i++) {
+        var span = document.createElement("SPAN");
+        var txt = document.createTextNode("\u00D7");
+        span.className = "close";
+        span.appendChild(txt);
+        myNodelist[i].appendChild(span);
+      }
+      
+      var close = document.getElementsByClassName("close");
+      var i;
+      for (i = 0; i < close.length; i++) {
+        close[i].onclick = function() {
+          var div = this.parentElement;
+          div.style.display = "none";
+        }
+      }
+      
+      var list = document.querySelector('ul');
+      list.addEventListener('click', function handleClick(ev) {
+        if (ev.target.tagName === 'li') {
+          ev.target.classList.add('checked');
+        }
+      }, false);
+      
+      function newElement() {
+        var li = document.createElement("li");
+        var inputValue = document.getElementById("myInput").value;
+        var t = document.createTextNode(inputValue);
+        li.appendChild(t);
+        if (inputValue === '') {
+          alert("You must write something!");
+        } else {
+          document.getElementById("myUL").appendChild(li);
+        }
+        document.getElementById("myInput").value = "";
+      
+        var span = document.createElement("SPAN");
+        var txt = document.createTextNode("\u00D7");
+        span.className = "close";
+        span.appendChild(txt);
+        li.appendChild(span);
+      
+        for (i = 0; i < close.length; i++) {
+          close[i].onclick = function() {
+            var div = this.parentElement;
+            div.style.display = "none";
+          }
+        }
+      }
+
+      
+        
+      displayClock() 
+    </script>
+
+    <div class="border"></div>
+    
+    <div class="padding">
+        <div id="date"></div>
+        <div id="clock"></div>
+    </div>
+    
+    <div class="border"></div>
+
+  <div id="todo" class="header">
+          <h2>To Do</h2>
+          <input type="text" id="myInput" placeholder="Title...">
+          <span onclick="newElement()" class="addBtn">+</span>
+          
+  </div>
+  
+  <ul id="myUL">
+  </ul>
+</body>
+</html>
